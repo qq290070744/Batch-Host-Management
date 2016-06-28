@@ -1,0 +1,112 @@
+作业1：day7左右增加断点续传
+作业2：开发一个批量主机管理工具
+需求：
+
+可以对机器进行分组                                           已实现 主机组、主机数据库，两者互相关联
+可以对指定的一组或多组机器执行批量命令，分发文件(发送\接收)  已实现 cmd批量命令 put发送文件到主机 get从主机下载文件到本地
+纪录操作日志                                                 已实现 主机操作记录在test.log文件中
+
+目录结构：
+├── bin
+│?? ├── DBTool.py                            数据库操作工具（查看、增加、删除主机组，查看、增加、删除、修改主机）
+│?? ├── __init__.py
+│?? └── ssh.py                            对主机组、主机进行 命令、上传、下载操作
+└── log                                          日志目录
+    ├── __init__.py
+    └── xxx.log
+mysql 数据库表的结构
+mysql> select * from host;
++----------------+------------+----------+----------+------+
+| host_ip        | host_group | username | password | port |
++----------------+------------+----------+----------+------+
+| 127.0.0.1      | local      | root     | 123456   |   22 |
+| 192.168.72.251 | test       | root     | 123456   |   22 |
+| 192.168.72.250 | test       | root     | 123456   |   22 |
++----------------+------------+----------+----------+------+
+3 rows in set (0.00 sec)
+
+本程序使用方法（本程序在Linux系统下，以python2.7为基础开发，需要安装mysql数据库，请在linux环境下运行，谢谢！）：
+一、数据库相关操作
+python dbtool.py   启动
+《《《《《《《《《显示信息》》》》》》》》》》
++------+----------------+
+| 编号 |      名称      |
++------+----------------+
+|  1   |    查看分组    |
+|  2   |    增加分组    |
+|  3   |    删除分组    |
+|  4   |   查看服务器   |
+|  5   |   增加服务器   |
+|  6   |  删除服务器    |
+|  7   | 修改服务器信息 |
+|  8   |      quit      |
++------+----------------+
+enter number:
+
+
+可以输入1-7进行对应操作，输入8退出
+二、进行批量操作
+python ssh.py
+
+1:对单台主机的操作
+2:对一组机器操作
+>>:2
+输入组名:test
+输入要操作的cmd:hostname
+192.168.72.251
+kali
+192.168.72.250
+localhost.localdomain
+
+1:对单台主机的操作
+2:对一组机器操作
+>>:2
+输入组名:test
+输入要操作的cmd:put
+请输入你要上传文件的绝对路径:/root/1.txt
+请输入上传到远程主机的绝对路径:/root/test0001.txt
+192.168.72.251
+put成功
+
+192.168.72.250
+put成功
+
+
+1:对单台主机的操作
+2:对一组机器操作
+>>:2
+输入组名:test
+输入要操作的cmd:ls -l
+192.168.72.251
+总用量 23820
+-rw-r--r-- 1 root root       16 3月   7 15:47 1.txt
+drwxr-xr-x 8 root root     4096 6月  27 17:26 file
+-rw-r--r-- 1 root root       16 6月  27 16:10 file.2.txt
+-rw-r--r-- 1 root root    69173 3月   7 15:54 hs_err_pid3608.log
+-rw-r--r-- 1 root root    89816 6月  12 23:36 java_error_in_PYCHARM_1467.log
+drwxr-xr-x 2 root root     4096 6月  25 13:42 __pycache__
+drwxr-xr-x 4 root root     4096 6月  17 12:41 PycharmProjects
+drwxr-xr-x 2 root root     4096 6月  17 12:39 pycharmprojects1
+drwxr-xr-x 2 root root     4096 6月   8 16:35 python
+drwxr-xr-x 2 root root     4096 6月   8 10:07 shell
+-rw-r--r-- 1 root root      379 6月  25 13:41 tab.py
+-rw-r--r-- 1 root root      524 6月  25 13:42 tab.pyc
+-rw-r--r-- 1 root root       16 6月  27 17:46 test0001.txt
+drwxr-xr-x 2 root root     4096 6月   7 11:03 vnc
+drwxr-xr-x 2 root root     4096 3月   7 19:49 公共
+drwxr-xr-x 2 root root     4096 3月   7 19:49 模板
+drwxr-xr-x 2 root root     4096 3月   7 19:49 视频
+drwxr-xr-x 2 root root     4096 3月   7 19:49 图片
+drwxr-xr-x 2 root root     4096 3月   7 19:49 文档
+drwxr-xr-x 2 root root     4096 3月   7 19:49 下载
+drwxr-xr-x 2 root root     4096 3月   7 19:49 音乐
+drwxr-xr-x 2 root root     4096 3月   7 19:49 桌面
+
+192.168.72.250
+总用量 56
+-rw-------. 1 root root  1294 5月  24 01:40 anaconda-ks.cfg
+drwxr-xr-x. 2 root root  4096 5月  24 02:04 cdrom
+drwxr-xr-x. 2 root root  4096 5月  24 02:53 file
+-rw-r--r--. 1 root root 27016 5月  24 01:40 install.log
+-rw-r--r--. 1 root root  7572 5月  24 01:38 install.log.syslog
+-rw-r--r--. 1 root root    16 6月  27 02:25 test0001.txt
