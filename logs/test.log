@@ -105,3 +105,7 @@ Mon, 2016-06-27 17:21:31 transport.py[line:1428] DEBUG Secsh channel 1 opened.
 Mon, 2016-06-27 17:21:31 channel.py[line:1072] DEBUG [chan 1] Sesch channel 1 request ok
 Mon, 2016-06-27 17:21:31 channel.py[line:1072] DEBUG [chan 1] EOF received (1)
 Mon, 2016-06-27 17:21:31 transport.py[line:1428] DEBUG EOF in transport thread
+Thu, 2017-04-13 16:50:14 dbtool.py[line:70] INFO 添加主机[121.201.68.21]
+Thu, 2017-04-13 16:51:40 dbtool.py[line:70] INFO 添加主机[121.201.29.81]
+Thu, 2017-04-13 16:52:10 dbtool.py[line:70] INFO 添加主机[121.201.7.63]
+Thu, 2017-04-13 16:53:03 dbtool.py[line:78] INFO del主机121.201.68.21
